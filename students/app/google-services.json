@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "534272690989",
+    "project_id": "kursach-a88dc",
+    "storage_bucket": "kursach-a88dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534272690989:android:9032310ee6fdc1e677a1a4",
+        "android_client_info": {
+          "package_name": "com.company.students"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534272690989-vb4okscan12p93147kbe0unnclp67j8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgMeMhPJFSmWwnmtVfQQW35Id35zbmzFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534272690989-vb4okscan12p93147kbe0unnclp67j8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534272690989:android:1040dc7080d751ae77a1a4",
+        "android_client_info": {
+          "package_name": "com.company.teachers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534272690989-vb4okscan12p93147kbe0unnclp67j8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgMeMhPJFSmWwnmtVfQQW35Id35zbmzFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534272690989-vb4okscan12p93147kbe0unnclp67j8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
