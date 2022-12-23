@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Fragments.StudenteFilterFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Fragments.StudentsFilterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/filter_btn_next"
+       android:layout_width="55dp"
+       android:layout_height="55dp"
+       android:layout_marginEnd="16dp"
+       android:layout_marginBottom="16dp"
+       android:src="@drawable/ic_btn_next"
+       app:tint="@android:color/white"
+       android:backgroundTint="@color/colorPrimary"
+       android:contentDescription="@string/next"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent" />
 
-</FrameLayout>
+   <com.google.android.material.textfield.TextInputLayout
+       android:id="@+id/subjects_list"
+       style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:hint="@string/Filter_subjects_hint">
+
+      <AutoCompleteTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="none"
+          tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+   </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
