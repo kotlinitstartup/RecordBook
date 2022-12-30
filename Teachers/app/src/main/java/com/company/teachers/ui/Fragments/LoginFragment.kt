@@ -1,46 +1,67 @@
 package com.company.teachers.ui.Fragments
 
-import android.widget.TextView
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.company.teachers.Authentification
 import com.company.teachers.R
 import com.company.teachers.Utilits.replaceFragment
 import com.company.teachers.Utilits.showToast
 import com.company.teachers.databinding.FragmentLoginBinding
-import com.google.android.material.button.MaterialButton
+import com.company.teachers.ui.Dialogs.LoadingDialog
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlin.concurrent.timer
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var mBinding: FragmentLoginBinding
     private lateinit var authentification: Authentification
+    private lateinit var loadingDialog: LoadingDialog
 
-    override fun onResume() {
-        super.onResume()
-        initFunc()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         mBinding = FragmentLoginBinding.inflate(layoutInflater)
-
-
-        var loginButton = view?.findViewById<MaterialButton>(R.id.login_login_button)
-        var forgotPasswordButton = view?.findViewById<TextView>(R.id.login_forgot_password_btn)
-
-        var loginText = view?.findViewById<TextInputEditText>(R.id.login_login_input_text)
-        var passwordText = view?.findViewById<TextInputEditText>(R.id.login_password_input_text)
-
-        forgotPasswordButton?.setOnClickListener {
-            replaceFragment(ForgotPasswordFragment())
-        }
-        loginButton?.setOnClickListener { Login(loginText, passwordText) }
+        return mBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initFunc()
+
+        val loginButton = mBinding.loginLoginButton
+        val forgotPasswordButton = mBinding.loginForgotPasswordBtn
+
+        val loginText = mBinding.loginLoginInputText
+        val passwordText = mBinding.loginPasswordInputText
+
+        forgotPasswordButton.setOnClickListener {
+            replaceFragment(ForgotPasswordFragment())
+        }
+        loginButton.setOnClickListener { login(loginText, passwordText) }
+
+        //replaceFragment(StudentsFilterFragment())
+    }
 
     private fun initFunc() {
         authentification = Authentification.getInstance()
+        loadingDialog = LoadingDialog(activity)
     }
 
-    private fun Login(loginText: TextInputEditText?, passwordText: TextInputEditText?) {
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    private fun login(loginText: TextInputEditText?, passwordText: TextInputEditText?) {
         var login: String = loginText?.text.toString()
         var password: String = passwordText?.text.toString()
 
@@ -49,19 +70,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         } else if (password.isEmpty()) {
             showToast(getString(R.string.login_toast_enter_password))
         } else {
-            replaceFragment(StudentsFilterFragment())
+            login = "vanya@gmail.ru"
+            password = "12345"
 
-//            authentification.Login(login, password)
-//
-//            if (authentification.currentTeacher != null){
-//                replaceFragment(StudentsFilterFragment())
-//            }
-//            else {
-//                showToast("Не удалось войти")
-//            }
-
+            loadingDialog.startLoadingDialog()
+            scope.launch {
+                val loginAwait = async { authentification.login(login, password) }
+                loginAwait.await()
+                if (authentification.token !== null) {
+                    loadingDialog.dismissLoadingDialog()
+                    replaceFragment(StudentsFilterFragment())
+                } else {
+                    loadingDialog.dismissLoadingDialog()
+                    showToast("Ошибка при входе!")
+                }
+            }
         }
-
     }
-
 }

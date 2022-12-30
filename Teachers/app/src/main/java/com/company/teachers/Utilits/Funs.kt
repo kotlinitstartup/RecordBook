@@ -7,7 +7,9 @@ import com.company.teachers.ui.Fragments.ForgotPasswordFragment
 import retrofit2.Retrofit
 
 fun Fragment.showToast (message: String){
-    Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+    requireActivity().runOnUiThread{
+        Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+    }
 }
 
 fun Fragment.replaceFragment (fragment: Fragment){

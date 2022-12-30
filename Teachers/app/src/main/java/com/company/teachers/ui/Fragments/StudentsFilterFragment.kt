@@ -1,13 +1,28 @@
 package com.company.teachers.ui.Fragments
 
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
+
+
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ProgressBar
+
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.company.teachers.R
 import com.company.teachers.Utilits.replaceFragment
 import com.company.teachers.databinding.FragmentStudentsFilterBinding
+import com.company.teachers.ui.Adapters.StudentRecyclerAdapter
+import kotlinx.coroutines.launch
+import android.view.ViewGroup.LayoutParams
+import kotlinx.coroutines.runBlocking
 
 
 class StudentsFilterFragment : Fragment() {
@@ -15,9 +30,8 @@ class StudentsFilterFragment : Fragment() {
     private var _binding: FragmentStudentsFilterBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentStudentsFilterBinding.inflate(inflater,container,false)
 
         return binding.root
@@ -27,13 +41,23 @@ class StudentsFilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        var nextButton = binding.filterBtnNext
-        nextButton.show()
-        nextButton.visibility = View.VISIBLE
+        initFunc()
+    }
 
-        val items = listOf("Item 1", "Item 2", "Item 3", "Item 4")
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+    private fun initFunc() {
+        var items = listOf("Subject 1", "Subject 2", "Subject 3", "Subject 4")
+        var adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         var textField = binding.subjectsList
+        (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+        items = listOf("Group 1", "Group 2", "Group 3", "Group 4")
+        adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        textField = binding.groupsList
+        (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+        items = listOf("Семестр 1", "Семестр 2")
+        adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        textField = binding.semestersList
         (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         binding.filterBtnNext.setOnClickListener{

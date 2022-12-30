@@ -25,7 +25,27 @@
     <style name="actionMenu" parent="Theme.AppCompat.Light">
         <item name="background">@color/white</item>
         <item name="actionMenuTextColor">@color/black</item>
-        
     </style>
+
+    <style name="Widget.App.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ExposedDropdownMenu</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="endIconTint">@color/primary</item>
+    </style>
+
+    <style name="ThemeOverlay.App.ExposedDropdownMenu" parent="">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorOnSurface">@color/color_primary</item>
+        <item name="colorError">@color/color_primary</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="autoCompleteTextViewStyle">@style/Widget.Material3.AutoCompleteTextView.FilledBox</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
 
 </resources>

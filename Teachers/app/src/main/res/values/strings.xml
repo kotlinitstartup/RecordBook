@@ -10,17 +10,18 @@
     <!--  Forgot Password Fragment  -->
     <string name="forgot_send_to_email">Отправить пароль на почту</string>
     <string name="forgot_password_email">login</string>
-
-    <!--  Forgot Password Fragment  -->
-
-    <string name="main_menu_exit">Выйти</string>
     <string name="forgot_password_left_time">60</string>
     <string name="login_toast_enter_email">Введите почту</string>
     <string name="login_toast_enter_password">Введите пароль</string>
+
+    <!--  Filter Fragment  -->
+
+    <string name="main_menu_exit">Выйти</string>
     <string name="next">next</string>
-    <string name="Filter_subjects_hint">Предметы</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Filter_groups_hint">Группа</string>
+    <string name="Filter_subjects_hint">Предмет</string>
+    <string name="Filter_semesters_hint">Семестр</string>
 
     <!--  Exam marks  -->
     <string-array name="exam_marks">

@@ -1,5 +1,6 @@
 package com.company.teachers.dto
 
-data class TeacherLoginPayload(val email: String, val password: String) {
+import com.google.gson.annotations.SerializedName
 
-}
+data class TeacherLoginPayload(@SerializedName("email") val email: String,
+                               @SerializedName("password")val password: String)

@@ -21,9 +21,10 @@
 
    <com.google.android.material.textfield.TextInputLayout
        android:id="@+id/subjects_list"
-       style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+       android:layout_margin="16dp"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintTop_toTopOf="parent"
@@ -32,9 +33,49 @@
       <AutoCompleteTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          style="@style/Widget.App.ExposedDropdownMenu"
           android:inputType="none"
           tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
    </com.google.android.material.textfield.TextInputLayout>
+
+   <com.google.android.material.textfield.TextInputLayout
+       android:id="@+id/groups_list"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+       android:layout_margin="16dp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/subjects_list"
+       android:hint="@string/Filter_groups_hint">
+
+      <AutoCompleteTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/Widget.App.ExposedDropdownMenu"
+          android:inputType="none"
+          tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+   </com.google.android.material.textfield.TextInputLayout>
+
+   <com.google.android.material.textfield.TextInputLayout
+       android:id="@+id/semesters_list"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+       android:layout_margin="16dp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/groups_list"
+       android:hint="@string/Filter_semesters_hint">
+
+      <AutoCompleteTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/Widget.App.ExposedDropdownMenu"
+          android:inputType="none"
+          tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+   </com.google.android.material.textfield.TextInputLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
