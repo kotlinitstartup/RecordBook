@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.company.teachers.databinding.ActivityMainBinding
 import com.company.teachers.ui.Fragments.LoginFragment
-import com.company.teachers.ui.Fragments.StudentsFilterFragment
+import com.company.teachers.ui.Fragments.FiltersFragment
 import com.company.teachers.ui.objects.AppDrawer
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         var isLogined = false
         if (isLogined) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main_fragment_container, StudentsFilterFragment()).commit()
+                .replace(R.id.main_fragment_container, FiltersFragment()).commit()
         } else {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_fragment_container, LoginFragment()).commit()

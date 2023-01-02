@@ -3,9 +3,9 @@
 
     <!-- Login Fragment -->
     <string name="login_forgot_password">забыл пароль</string>
-    <string name="login_login">login</string>
-    <string name="login_hint_login">login</string>
-    <string name="login_hint_password">password</string>
+    <string name="login_login">Войти</string>
+    <string name="login_hint_login">Почта</string>
+    <string name="login_hint_password">Пароль</string>
 
     <!--  Forgot Password Fragment  -->
     <string name="forgot_send_to_email">Отправить пароль на почту</string>

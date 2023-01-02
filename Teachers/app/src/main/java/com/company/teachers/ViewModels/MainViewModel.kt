@@ -1,13 +1,9 @@
-package com.company.teachers.ViewModels
+package com.company.teachers.viewModels
 
 import android.app.Application
 import android.os.CountDownTimer
-import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.company.teachers.R
-import com.company.teachers.ui.Fragments.ForgotPasswordFragment
 
 class MainViewModel(application: Application, val text: String) : AndroidViewModel(application) {
     val liveData = MutableLiveData<String>()

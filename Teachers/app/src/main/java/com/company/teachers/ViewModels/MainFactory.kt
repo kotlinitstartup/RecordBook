@@ -1,7 +1,6 @@
-package com.company.teachers.ViewModels
+package com.company.teachers.viewModels
 
 import android.app.Application
-import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras

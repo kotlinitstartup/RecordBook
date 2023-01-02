@@ -1,14 +1,11 @@
 package com.company.teachers.ui.Fragments
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.company.teachers.R
-import com.company.teachers.Utilits.replaceFragment
-import com.company.teachers.Utilits.showToast
+import com.company.teachers.utils.showToast
 import com.company.teachers.databinding.FragmentStudentsListBinding
 import com.company.teachers.dto.Student
 import com.company.teachers.ui.Adapters.StudentRecyclerAdapter

@@ -1,90 +1,53 @@
 package com.company.teachers.ui.Fragments
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.company.teachers.Authentification
+import androidx.lifecycle.ViewModelProvider
+import com.company.teachers.viewModels.AuthenticationViewModel
 import com.company.teachers.R
-import com.company.teachers.Utilits.replaceFragment
-import com.company.teachers.Utilits.showToast
+import com.company.teachers.utils.replaceFragment
 import com.company.teachers.databinding.FragmentLoginBinding
-import com.company.teachers.ui.Dialogs.LoadingDialog
-import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlin.concurrent.timer
+import com.company.teachers.viewModels.AuthenticationViewModelFactory
+import com.company.teachers.viewModels.MainFactory
+import com.company.teachers.viewModels.MainViewModel
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var mBinding: FragmentLoginBinding
-    private lateinit var authentification: Authentification
-    private lateinit var loadingDialog: LoadingDialog
+    private lateinit var authenticationViewModel: AuthenticationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        mBinding = FragmentLoginBinding.inflate(layoutInflater)
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initFunc()
+        authenticationViewModel = ViewModelProvider(
+            this,
+            AuthenticationViewModelFactory(application = Application(), this)
+        ).get(AuthenticationViewModel::class.java)
+        mBinding.viewModel = authenticationViewModel
 
-        val loginButton = mBinding.loginLoginButton
         val forgotPasswordButton = mBinding.loginForgotPasswordBtn
-
-        val loginText = mBinding.loginLoginInputText
-        val passwordText = mBinding.loginPasswordInputText
 
         forgotPasswordButton.setOnClickListener {
             replaceFragment(ForgotPasswordFragment())
         }
-        loginButton.setOnClickListener { login(loginText, passwordText) }
-
-        //replaceFragment(StudentsFilterFragment())
     }
 
-    private fun initFunc() {
-        authentification = Authentification.getInstance()
-        loadingDialog = LoadingDialog(activity)
-    }
 
-    private val scope = CoroutineScope(Dispatchers.IO)
-
-    private fun login(loginText: TextInputEditText?, passwordText: TextInputEditText?) {
-        var login: String = loginText?.text.toString()
-        var password: String = passwordText?.text.toString()
-
-        if (login.isEmpty()) {
-            showToast(getString(R.string.login_toast_enter_email))
-        } else if (password.isEmpty()) {
-            showToast(getString(R.string.login_toast_enter_password))
-        } else {
-            login = "vanya@gmail.ru"
-            password = "12345"
-
-            loadingDialog.startLoadingDialog()
-            scope.launch {
-                val loginAwait = async { authentification.login(login, password) }
-                loginAwait.await()
-                if (authentification.token !== null) {
-                    loadingDialog.dismissLoadingDialog()
-                    replaceFragment(StudentsFilterFragment())
-                } else {
-                    loadingDialog.dismissLoadingDialog()
-                    showToast("Ошибка при входе!")
-                }
-            }
-        }
-    }
 }
