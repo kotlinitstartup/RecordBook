@@ -29,6 +29,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <provider
+            android:name=".ContentProvider.StudentsMarksProvider"
+            android:authorities="com.company.provider"
+            android:enabled="true"
+            android:exported="true"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

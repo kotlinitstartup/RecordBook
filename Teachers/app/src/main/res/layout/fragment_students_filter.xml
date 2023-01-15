@@ -40,7 +40,7 @@
           android:id="@+id/subjects_list"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@{viewmodel.subject}"
+          android:text="@={viewmodel.subject}"
           style="@style/Widget.App.ExposedDropdownMenu"
           android:inputType="none"
           tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
@@ -61,7 +61,7 @@
           android:id="@+id/groups_list"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@{viewmodel.group}"
+          android:text="@={viewmodel.group}"
           style="@style/Widget.App.ExposedDropdownMenu"
           android:inputType="none"
           tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
@@ -82,13 +82,32 @@
           android:id="@+id/semesters_list"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@{viewmodel.semester}"
+          android:text="@={viewmodel.semester}"
           style="@style/Widget.App.ExposedDropdownMenu"
           android:inputType="none"
           tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
    </com.google.android.material.textfield.TextInputLayout>
 
+   <com.google.android.material.textfield.TextInputLayout
+       android:id="@+id/exam_types"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+       android:layout_margin="16dp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/semesters"
+       android:hint="Тип экзамена">
 
+      <AutoCompleteTextView
+          android:id="@+id/exam_types_list"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@={viewmodel.examType}"
+          style="@style/Widget.App.ExposedDropdownMenu"
+          android:inputType="none"
+          tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+   </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

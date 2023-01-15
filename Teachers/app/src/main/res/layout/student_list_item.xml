@@ -43,14 +43,14 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/student_mark"
+                android:id="@+id/student_marks"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
 
                 <AutoCompleteTextView
-                    android:text="—"
+                    android:id="@+id/student_mark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"

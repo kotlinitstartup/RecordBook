@@ -1,5 +1,6 @@
 package com.company.teachers
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -32,7 +33,11 @@ class MainActivity : AppCompatActivity() {
     private fun initFunc() {
         setSupportActionBar(mToolbar)
         mAppDrawer.create()
-        var isLogined = false
+        var isLogined =
+            getSharedPreferences("com.company.prefs", Context.MODE_PRIVATE).getString(
+                "token",
+                null
+            ) !== null
         if (isLogined) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_fragment_container, FiltersFragment()).commit()

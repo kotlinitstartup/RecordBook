@@ -1,18 +1,10 @@
 package com.company.teachers.Retrofit
 
-import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.company.teachers.dto.FiltersResponse
-import com.company.teachers.dto.TeacherLoginPayload
-import com.company.teachers.dto.TeacherLoginResponse
-import com.company.teachers.dto.User
+import com.company.teachers.dto.*
 import com.company.teachers.utils.getFromSharedPreferences
-import kotlinx.coroutines.*
-import okhttp3.Authenticator
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Route
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.nio.file.attribute.AclEntry.newBuilder
@@ -25,14 +17,16 @@ class RetrofitApi(var fragment: Fragment) {
 
     private var BASE_URL = "https://record-books.onrender.com/"
 
-    val client = OkHttpClient.Builder().connectTimeout(10000, TimeUnit.MILLISECONDS)
-        .readTimeout(10000, TimeUnit.MILLISECONDS)
-        .writeTimeout(10000, TimeUnit.MILLISECONDS)
+    val client = OkHttpClient.Builder().connectTimeout(40000, TimeUnit.MILLISECONDS)
+        .readTimeout(40000, TimeUnit.MILLISECONDS)
+        .writeTimeout(40000, TimeUnit.MILLISECONDS)
         .addInterceptor { chain ->
             val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", fragment.getFromSharedPreferences("token"))
-                .build()
-            chain.proceed(newRequest)
+            val token = fragment.getFromSharedPreferences("token")
+            if (token != null) {
+                newRequest.addHeader("Authorization", token)
+            }
+            chain.proceed(newRequest.build())
         }
         .build()
 
@@ -84,7 +78,47 @@ class RetrofitApi(var fragment: Fragment) {
                 }
             })
         }
+    }
 
+    suspend fun getStudents(studentsPayload: StudentsPayload): List<StudentResponse>? {
+        return suspendCoroutine { continuation ->
+            val call = service.getStudents(mapOf(
+                "groupId" to studentsPayload.groupId.toString(),
+                "subjectId" to studentsPayload.subjectId.toString(),
+                "semesterId" to studentsPayload.semesterId.toString(),
+                "type" to studentsPayload.type
+            ))
+
+            call.enqueue(object : Callback<List<StudentResponse>> {
+                override fun onResponse(
+                    call: Call<List<StudentResponse>>,
+                    response: Response<List<StudentResponse>>
+                ) {
+                    continuation.resume(response.body())
+                }
+                override fun onFailure(call: Call<List<StudentResponse>>, t: Throwable) {
+                    Log.i("retrofit", t.toString())
+                    continuation.resumeWithException(t)
+                }
+            })
+        }
+    }
+
+    suspend fun updateStudents(stumarResponse: List<StudentsMarks>?): Unit{
+        return suspendCoroutine { continuation ->
+            val call = service.updateStudents(StudentsMarksPayload(stumarResponse!!, "exam"))
+            call.enqueue(object : Callback<Unit> {
+                override fun onResponse(
+                    call: Call<Unit>,
+                    response: Response<Unit>
+                ) {
+                    continuation.resume(Unit)
+                }
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
+                    continuation.resumeWithException(t)
+                }
+            })
+        }
     }
 }
 

@@ -10,5 +10,5 @@ import com.google.android.material.textfield.TextInputLayout
 class StudentHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     val fullname: TextView = itemView.findViewById(R.id.student_fullname)
     val recordbookId: TextView = itemView.findViewById(R.id.student_recordbook)
-    val mark: TextInputLayout = itemView.findViewById(R.id.student_mark)
+    val mark: AutoCompleteTextView = itemView.findViewById(R.id.student_mark)
 }

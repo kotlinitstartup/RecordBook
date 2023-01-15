@@ -19,3 +19,8 @@ fun Fragment.getFromSharedPreferences(key: String): String?{
     return data
 }
 
+fun Fragment.removeFromSharedPreferences(key: String){
+    val prefs = context?.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
+    prefs?.edit()?.remove(key)?.commit()
+}
+

@@ -1,13 +1,10 @@
 package com.company.teachers.viewModels
 
-import android.R
 import android.app.Application
-import android.widget.ArrayAdapter
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.company.teachers.Retrofit.RetrofitApi
-import com.company.teachers.dto.FiltersPayload
 import com.company.teachers.dto.Group
 import com.company.teachers.dto.Subject
 import com.company.teachers.ui.Dialogs.LoadingDialog
@@ -22,9 +19,11 @@ class FiltersViewModel(application: Application, var filtersFragment: FiltersFra
     var semester = MutableLiveData("")
     var group = MutableLiveData("")
     var subject = MutableLiveData("")
-    var semesters: MutableLiveData<List<String>> = MutableLiveData()
-    var groups: MutableLiveData<List<String>> = MutableLiveData()
-    var subjects: MutableLiveData<List<String>> = MutableLiveData()
+    var examType = MutableLiveData("")
+    var examTypes: MutableLiveData<List<String>> = MutableLiveData()
+    var semesters: MutableLiveData<List<Int>> = MutableLiveData()
+    var groups: MutableLiveData<List<Group>> = MutableLiveData()
+    var subjects: MutableLiveData<List<Subject>> = MutableLiveData()
 
 
     var loadingDialog = filtersFragment.activity?.let { LoadingDialog(it) }
@@ -33,18 +32,26 @@ class FiltersViewModel(application: Application, var filtersFragment: FiltersFra
         GlobalScope.launch(Dispatchers.Main) {
             loadingDialog?.startLoading()
 
-            val filtersResponse = retrofitApi.getFilters()
+            try {
+                val filtersResponse = retrofitApi.getFilters()
+                if (filtersResponse != null) {
+                    groups.value = filtersResponse.groups
+                    subjects.value = filtersResponse.subjects
 
-            if (filtersResponse != null) {
-                groups.value = filtersResponse.groups.map { el -> el.name }
-                subjects.value = filtersResponse.subjects.map { el -> el.name }
+                    var examTypesList = listOf("Экзамен", "Зачет")
+                    examTypes.value = examTypesList
 
+                    var semestestrList = listOf(1, 2)
+                    semesters.value = semestestrList
+                }
 
-                var semestestrList = listOf("1", "2")
-                semesters.value = semestestrList
+                loadingDialog?.hideLoading()
+            }
+            catch (e: Exception){
+                Log.i("filter", e.toString())
+                loadingDialog?.hideLoading()
             }
 
-            loadingDialog?.hideLoading()
         }
     }
 

@@ -1,15 +1,8 @@
 package com.company.teachers.Retrofit
 
-import com.company.teachers.dto.FiltersPayload
-import com.company.teachers.dto.FiltersResponse
-import com.company.teachers.dto.TeacherLoginPayload
-import com.company.teachers.dto.TeacherLoginResponse
+import com.company.teachers.dto.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 
 interface Api {
     @POST("auth/teachers/login")
@@ -19,5 +12,8 @@ interface Api {
     fun getFilters(): Call<FiltersResponse>
 
     @GET("teachers/students")
-    fun getStudents(@QueryMap filtersPayload: FiltersPayload): Call<FiltersResponse>
+    fun getStudents(@QueryMap studentsPayload: Map<String, String>): Call<List<StudentResponse>>
+
+    @PUT("teachers/students/marks")
+    fun updateStudents(@Body p: StudentsMarksPayload): Call<Unit>
 }
