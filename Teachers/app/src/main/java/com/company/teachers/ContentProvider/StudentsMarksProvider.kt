@@ -13,8 +13,8 @@ import java.lang.IllegalArgumentException
 class StudentsMarksProvider : ContentProvider() {
 
     companion object {
-        const val CONTENT_AUTHORITY = "com.company.provider"
-        const val STUDENTS_MARKS_LIST_PATH = "studentsmarkslist"
+        const val CONTENT_AUTHORITY = "com.company.teachers.provider"
+        const val STUDENTS_MARKS_LIST_PATH = "students_marks_list"
         val CONTENT_AUTHORITY_URI =
             Uri.parse("content://" + CONTENT_AUTHORITY + "/" + STUDENTS_MARKS_LIST_PATH)
         const val URI_STUDENTS_MARKS = 1
@@ -24,10 +24,7 @@ class StudentsMarksProvider : ContentProvider() {
         init {
             uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
             uriMatcher!!.addURI(CONTENT_AUTHORITY, STUDENTS_MARKS_LIST_PATH, URI_STUDENTS_MARKS)
-            uriMatcher!!.addURI(
-                CONTENT_AUTHORITY,
-                STUDENTS_MARKS_LIST_PATH + "/#",
-                URI_STUDENTS_MARK_ID
+            uriMatcher!!.addURI(CONTENT_AUTHORITY, STUDENTS_MARKS_LIST_PATH + "/#", URI_STUDENTS_MARK_ID
             )
         }
     }
@@ -68,7 +65,7 @@ class StudentsMarksProvider : ContentProvider() {
         return cursor
     }
 
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+    override fun insert(uri: Uri, values: ContentValues?): Uri {
         val result: Uri
         val rowID: Long
         if (uriMatcher!!.match(uri) == URI_STUDENTS_MARKS) {

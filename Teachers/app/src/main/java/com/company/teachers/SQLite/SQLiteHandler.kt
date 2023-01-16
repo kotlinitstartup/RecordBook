@@ -15,10 +15,10 @@ class SQLiteHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null
 
     companion object {
         private const val DB_NAME = "STUDENTS_MARKS_DB"
-        private const val DB_VERSION = 1
+        private const val DB_VERSION = 2
         private const val STUDENTS_MARKS = "STUDENTS_MARKS"
 
-        private const val ID_STUDENTS_MARKS = "ID"
+        private const val ID_STUDENTS_MARKS = "ID_STUDENTS_MARKS"
         private const val MARK = "MARK"
     }
 
