@@ -1,36 +1,51 @@
 package com.company.students
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.company.students.dto.Student
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.appcompat.widget.Toolbar
+import com.company.students.databinding.ActivityMainBinding
+import com.company.students.ui.fragments.FiltersFragment
+import com.company.students.ui.fragments.LoginFragment
+import com.company.students.ui.objects.AppDrawer
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var _binding: ActivityMainBinding
+    private lateinit var mToolbar: Toolbar
+    lateinit var mAppDrawer: AppDrawer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8000/students/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(_binding.root)
+    }
 
-        val studentsApi = retrofit.create(Api::class.java)
+    override fun onStart() {
+        super.onStart()
 
-        val userCall = studentsApi.getMarks(1)
-        userCall.enqueue(object : Callback<Student> {
-            override fun onResponse(call: Call<Student>, response: Response<Student>) {
-                Log.i("Govno", response.body()?.firstname.toString())
-            }
+        mToolbar = _binding.mainToolbar
+        mAppDrawer = AppDrawer(this, mToolbar)
 
-            override fun onFailure(call: Call<Student>, t: Throwable) {
-                Log.i("Pomoyka", t.message.toString())
-            }
-        })
+        initFunc()
+    }
+
+    private fun initFunc() {
+        setSupportActionBar(mToolbar)
+        mAppDrawer.create()
+        var isLogined =
+            getSharedPreferences("com.company.prefs", Context.MODE_PRIVATE).getString(
+                "token",
+                null
+            ) !== null
+        if (isLogined) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_fragment_container, FiltersFragment()).commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_fragment_container, LoginFragment()).commit()
+        }
+
     }
 }
